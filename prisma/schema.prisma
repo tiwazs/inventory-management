@@ -6,19 +6,94 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
+model Types {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Item      Item[]
+}
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?   @unique
-  email         String?   @unique
+  id            String      @id @default(cuid())
+  name          String?     @unique
+  email         String?     @unique
   password      String?
   firstName     String?
   lastName      String?
   image         String?
-  emailVerified DateTime? @map("email_verified")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  emailVerified DateTime?   @map("email_verified")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Workspace     Workspace[]
+}
+
+model Workspace {
+  id        String     @id @default(cuid())
+  User      User       @relation(fields: [userId], references: [id])
+  userId    String
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Category  Category[]
+  Location  Location[]
+  Item      Item[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  name        String
+  description String?
+  lft         Int
+  rgt         Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Item        Item[]
+}
+
+model Location {
+  id          String    @id @default(cuid())
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  name        String
+  address     String
+  latitude    Float
+  longitude   Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Item        Item[]
+}
+
+model Item {
+  id                String    @id @default(cuid())
+  Workspace         Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId       String
+  Category          Category  @relation(fields: [categoryId], references: [id])
+  categoryId        String
+  Location          Location? @relation(fields: [locationId], references: [id])
+  locationId        String?
+  Types             Types     @relation(fields: [typesId], references: [id])
+  typesId           String
+  barcode           String?
+  serialNumber      String?
+  quantity          Int
+  name              String
+  description       String?
+  wholeSalePriceInd Float?
+  retailPriceInd    Float?
+  wholeSalePrice    Float?
+  retailPrice       Float?
+  length            Float?
+  width             Float?
+  height            Float?
+  weight            Float?
+  forSale           Boolean
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
