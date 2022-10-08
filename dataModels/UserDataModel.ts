@@ -1,3 +1,4 @@
+/**************************************************|User Data Models|**********************************************/
 export interface UserBaseDM {
     name: string | null | undefined;
     email: string | null | undefined;
@@ -9,6 +10,17 @@ export interface UserBaseDM {
 }
 
 export interface UserDM extends UserBaseDM {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+/**************************************************|Type Data Models|**********************************************/
+export interface TypeBaseDM {
+    name: string;
+}
+
+export interface TypeDM extends TypeBaseDM {
     id: string;
     createdAt: Date;
     updatedAt: Date;
