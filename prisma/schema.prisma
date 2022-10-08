@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Types {
+model Type {
   id        String   @id @default(cuid())
   name      String
   createdAt DateTime @default(now())
@@ -78,7 +78,7 @@ model Item {
   categoryId        String
   Location          Location? @relation(fields: [locationId], references: [id])
   locationId        String?
-  Types             Types     @relation(fields: [typesId], references: [id])
+  Types             Type      @relation(fields: [typesId], references: [id])
   typesId           String
   barcode           String?
   serialNumber      String?
