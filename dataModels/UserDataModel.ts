@@ -1,13 +1,11 @@
-
-/****************************************************|User Models|********************************************/
 export interface UserBaseDM {
-    name: string;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    image: string;
-    emailVerified: boolean;
+    name: string | null | undefined;
+    email: string | null | undefined;
+    password: string | null | undefined;
+    firstName: string | null | undefined;
+    lastName: string | null | undefined;
+    image: string | null | undefined;
+    emailVerified: Date | null | undefined;
 }
 
 export interface UserDM extends UserBaseDM {
