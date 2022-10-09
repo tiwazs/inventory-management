@@ -78,8 +78,8 @@ model Item {
   categoryId        String
   Location          Location? @relation(fields: [locationId], references: [id])
   locationId        String?
-  Types             Type      @relation(fields: [typesId], references: [id])
-  typesId           String
+  Type              Type      @relation(fields: [typeId], references: [id])
+  typeId            String
   barcode           String?
   serialNumber      String?
   quantity          Int
