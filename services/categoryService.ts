@@ -117,7 +117,13 @@ export class CategoryService {
         }
 
     }
-    
+
+
+    /*
+    *  Deletes a category
+    *  We need to update the boundaries of the other categories in the tree
+    *  everything to the right of the category, needs to be moved to the left by the width of the category
+    */
     static async delete(id: string): Promise<Category | null> {
         const categoryToDelete = await prisma.category.findUnique({ where: { id: id } });
         if(!categoryToDelete) { throw new Error('Category not found'); }
@@ -126,7 +132,7 @@ export class CategoryService {
         const hasChildren: boolean = (categorySize > 1) ? true : false;
 
         if(hasChildren) {
-            // If category has children
+            // If category has children, we need to delete them too
             await prisma.category.deleteMany({
                 where: {
                     workspaceId: categoryToDelete.workspaceId,
@@ -136,53 +142,33 @@ export class CategoryService {
                     }
                 }
             });
-
-            // Update the boundaries of the other categories in the tree.
-            await prisma.category.updateMany({
-                where: {
-                    workspaceId: categoryToDelete.workspaceId,
-                    lft: {
-                        gt: categoryToDelete.rgt
-                    }
-                },
-                data: {
-                    lft: {
-                        decrement: categorySize + 1
-                    },
-                    rgt: {
-                        decrement: categorySize + 1
-                    }
-                }
-            });
-
-            return categoryToDelete;
         }else{
-            // If category has no children
+            // If category has no children, just delete it
             await prisma.category.delete({
                 where: {
                     id: id
                 }
             });
-
-            // Update the boundaries of the other categories in the tree.
-            await prisma.category.updateMany({
-                where: {
-                    workspaceId: categoryToDelete.workspaceId,
-                    lft: {
-                        gt: categoryToDelete.rgt
-                    }
-                },
-                data: {
-                    lft: {
-                        decrement: 2
-                    },
-                    rgt: {
-                        decrement: 2
-                    }
-                }
-            });
-
-            return categoryToDelete;
         }
+
+        // Update the boundaries of the other categories in the tree.
+        await prisma.category.updateMany({
+            where: {
+                workspaceId: categoryToDelete.workspaceId,
+                lft: {
+                    gt: categoryToDelete.rgt
+                }
+            },
+            data: {
+                lft: {
+                    decrement: categorySize + 1
+                },
+                rgt: {
+                    decrement: categorySize + 1
+                }
+            }
+        });
+
+        return categoryToDelete;
     }
 }
