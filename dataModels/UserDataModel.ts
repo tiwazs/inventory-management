@@ -25,7 +25,8 @@ export interface UserDM extends UserBaseDM {
  *      user:
  *          type: object
  *          required:
- *              - username
+ *              - name
+ *              - email
  *              - password
  *          properties:
  *              id:
@@ -66,9 +67,6 @@ export interface UserDM extends UserBaseDM {
  *  schemas:
  *      userToUpdate:
  *          type: object
- *          required:
- *              - username
- *              - password
  *          properties:
  *              name:
  *                  type: string
