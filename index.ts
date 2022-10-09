@@ -23,7 +23,7 @@ const swaggerOptions = {
       }
     ]
   },
-  apis: ["./routes/*.js"],
+  apis: ["./controllers/*.ts", "./dataModels/*.ts"],
 }
 
 const swaggerDcos = swaggerJSDoc(swaggerOptions);
@@ -36,6 +36,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+
+// API
+app.use('/api/user', require('./controllers/userController'));
+//app.use('/api/workspace', require('./controllers/workspaceController'));
+//app.use('/api/type', require('./controllers/typeController'));
+//app.use('/api/category', require('./controllers/categoryController'));
+//app.use('/api/location', require('./controllers/locationController'));
+//app.use('/api/item', require('./controllers/itemController'));
 
 
 app.listen(app.get('PORT'), () => {

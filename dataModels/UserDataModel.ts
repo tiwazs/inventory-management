@@ -1,3 +1,6 @@
+import express from 'express';
+const router = express.Router();
+
 /**************************************************|User Data Models|**********************************************/
 export interface UserBaseDM {
     name: string | null | undefined;
@@ -83,3 +86,6 @@ export interface UserDM extends UserBaseDM {
  *                 type: string 
  *                 description: image of the user
 */
+
+// Exporting so swagger can read the models
+module.exports = router;
