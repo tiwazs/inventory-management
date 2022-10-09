@@ -3,12 +3,12 @@ import { Category } from "@prisma/client";
 import { CategoryBaseDM, CategoryToCreateDM } from '../dataModels/CategoryDataModel';
 
 export class CategoryService {
-    static async findAll(): Promise<Category[]> {
+    static async getAll(): Promise<Category[]> {
         const categories = await prisma.category.findMany();
         return categories;
     }
 
-    static async findById(id: string): Promise<Category | null> {
+    static async getById(id: string): Promise<Category | null> {
         const category = await prisma.category.findUnique({
             where: {
                 id: id
@@ -17,7 +17,7 @@ export class CategoryService {
         return category;
     }
 
-    static async findByName(name: string): Promise<Category | null> {
+    static async getByName(name: string): Promise<Category | null> {
         const category = await prisma.category.findFirst({
             where: {
                 name: name

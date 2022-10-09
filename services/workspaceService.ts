@@ -3,12 +3,12 @@ import { Workspace } from "@prisma/client";
 import { WorkspaceBaseDM, WorkspaceDM } from "../dataModels/WorkspaceDataModel";
 
 export class WorkspaceService {
-    static async findAll(): Promise<Workspace[]> {
+    static async getAll(): Promise<Workspace[]> {
         const workspaces = await prisma.workspace.findMany();
         return workspaces;
     }
 
-    static async findById(id: string): Promise<WorkspaceDM | null> {
+    static async getById(id: string): Promise<WorkspaceDM | null> {
         const workspace = await prisma.workspace.findUnique({
             where: {
                 id: id
@@ -17,7 +17,7 @@ export class WorkspaceService {
         return workspace;
     }
 
-    static async findByName(name: string): Promise<WorkspaceDM | null> {
+    static async getByName(name: string): Promise<WorkspaceDM | null> {
         const workspace = await prisma.workspace.findFirst({
             where: {
                 name: name

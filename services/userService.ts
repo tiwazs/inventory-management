@@ -4,12 +4,12 @@ import { UserBaseDM } from '../dataModels/UserDataModel';
 
 
 export class UserService {
-    static async findAll(): Promise<User[]> {
+    static async getAll(): Promise<User[]> {
         const users = await prisma.user.findMany();
         return users;
     }
 
-    static async findById(id: string): Promise<User | null> {
+    static async getById(id: string): Promise<User | null> {
         const user =  await prisma.user.findFirst({
             where: {
                 id: id
@@ -19,7 +19,7 @@ export class UserService {
         return user;
     }
 
-    static async findEmail(email: string): Promise<User | null> {
+    static async getEmail(email: string): Promise<User | null> {
         const user = await prisma.user.findFirst({
             where: {
                 email: email
