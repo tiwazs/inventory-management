@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { UserBaseDM } from '../dataModels/UserDataModel';
 
 
-class UserService {
+export class UserService {
     static async findAll(): Promise<User[]> {
         const users = await prisma.user.findMany();
         return users;

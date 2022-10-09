@@ -15,87 +15,71 @@ export interface UserDM extends UserBaseDM {
     updatedAt: Date;
 }
 
-/**************************************************|Type Data Models|**********************************************/
-export interface TypeBaseDM {
-    name: string;
-}
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      user:
+ *          type: object
+ *          required:
+ *              - username
+ *              - password
+ *          properties:
+ *              id:
+ *                  type: string
+ *                  description: The auto-generated id of the user
+ *              name:
+ *                  type: string
+ *                  description: Username set by user
+ *              email:
+ *                  type: string
+ *                  description: Email set by user
+ *              password:
+ *                  type: string
+ *                  description: key to access
+ *              firstName:
+ *                  type: string
+ *                  description: first name of the user
+ *              lastName:
+ *                  type: string
+ *                  description: last name of the user
+ *              image: 
+ *                 type: string 
+ *                 description: image of the user
+ *              emailVerified:
+ *                 type: boolean
+ *                 description: if the email is verified
+ *              createdAt:
+ *                  type: string
+ *                  description: time
+ *              updatedAt:
+ *                  type: string
+ *                  description: time
+*/
 
-export interface TypeDM extends TypeBaseDM {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-/**************************************************|Workspace Data Models|**********************************************/
-export interface WorkspaceBaseDM {
-    userId: string;
-    name: string;
-}
-
-export interface WorkspaceDM extends WorkspaceBaseDM {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-/**************************************************|Category Data Models|**********************************************/
-export interface CategoryBaseDM {
-    workspaceId: string
-    name: string
-    description: string
-}
-
-export interface CategoryToCreateDM extends CategoryBaseDM {
-    parentId: string | null | undefined;
-}
-
-export interface CategoryDM extends CategoryBaseDM {
-    id: string;
-    lft: number;
-    rgt: number;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-/**************************************************|Location Data Models|**********************************************/
-export interface LocationBaseDM {
-    workspaceId: string;
-    name: string;
-    address: string;
-    latitude: number;
-    longitude: number;
-}
-
-export interface LocationDM extends LocationBaseDM {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-/**************************************************|Item Data Models|**********************************************/
-export interface ItemBaseDM {
-    workspaceId: string;
-    categoryId: string;
-    locationId: string;
-    typesId: string;
-    barcode: string;
-    serialNumber: string;
-    quantity: number;
-    name: string;
-    description: string;
-    wholeSalePriceInd: number;
-    retailPriceInd: number;
-    wholeSalePrice: number;
-    retailPrice: number;
-    length: number;
-    width: number;
-    height: number;
-    weight: number;
-    forSale: boolean;
-}
-
-export interface ItemToCreateDM extends ItemBaseDM {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      userToUpdate:
+ *          type: object
+ *          required:
+ *              - username
+ *              - password
+ *          properties:
+ *              name:
+ *                  type: string
+ *                  description: Username set by user
+ *              password:
+ *                  type: string
+ *                  description: key to access
+ *              firstName:
+ *                  type: string
+ *                  description: first name of the user
+ *              lastName:
+ *                  type: string
+ *                  description: last name of the user
+ *              image: 
+ *                 type: string 
+ *                 description: image of the user
+*/

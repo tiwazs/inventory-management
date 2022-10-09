@@ -1,6 +1,6 @@
 import prisma from '../configurations/dbinit';
 import { Location } from "@prisma/client";
-import { LocationBaseDM } from "../dataModels/UserDataModel";
+import { LocationBaseDM } from "../dataModels/LocationDataModel";
 
 export class LocationService {
     static async getAll(): Promise<Location[]> {

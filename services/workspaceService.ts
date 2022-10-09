@@ -1,6 +1,6 @@
 import prisma from '../configurations/dbinit';
 import { Workspace } from "@prisma/client";
-import { WorkspaceBaseDM, WorkspaceDM } from "../dataModels/UserDataModel";
+import { WorkspaceBaseDM, WorkspaceDM } from "../dataModels/WorkspaceDataModel";
 
 export class WorkspaceService {
     static async findAll(): Promise<Workspace[]> {

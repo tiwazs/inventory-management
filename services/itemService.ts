@@ -1,6 +1,6 @@
 import prisma from '../configurations/dbinit';
 import { Item } from '@prisma/client';
-import { ItemBaseDM } from '../dataModels/UserDataModel';
+import { ItemBaseDM } from '../dataModels/ItemDataModel';
 
 export class ItemService {
     static async getAll(): Promise<Item[]> {

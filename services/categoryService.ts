@@ -1,6 +1,6 @@
 import prisma from '../configurations/dbinit';
 import { Category } from "@prisma/client";
-import { CategoryBaseDM, CategoryToCreateDM } from '../dataModels/UserDataModel';
+import { CategoryBaseDM, CategoryToCreateDM } from '../dataModels/CategoryDataModel';
 
 export class CategoryService {
     static async findAll(): Promise<Category[]> {
