@@ -34,7 +34,7 @@ export class CategoryService {
     *  within a category boundaries, there can be no other category, and so on.
     */
     static async create(category: CategoryToCreateDM): Promise<Category> {
-
+ 
         
         if(!category.parentId) {            
             // If the gategory doesn't have a parent, it is a root category
@@ -87,7 +87,7 @@ export class CategoryService {
                     where: {
                         workspaceId: category.workspaceId,
                         lft: {
-                            gte: parentCategory.lft
+                            gt: parentCategory.lft
                         }
                     },
                     data: {
@@ -116,5 +116,73 @@ export class CategoryService {
             }
         }
 
+    }
+    
+    static async delete(id: string): Promise<Category | null> {
+        const categoryToDelete = await prisma.category.findUnique({ where: { id: id } });
+        if(!categoryToDelete) { throw new Error('Category not found'); }
+
+        const categorySize = categoryToDelete.rgt - categoryToDelete.lft;
+        const hasChildren: boolean = (categorySize > 1) ? true : false;
+
+        if(hasChildren) {
+            // If category has children
+            await prisma.category.deleteMany({
+                where: {
+                    workspaceId: categoryToDelete.workspaceId,
+                    lft: {
+                        gte: categoryToDelete.lft,
+                        lte: categoryToDelete.rgt
+                    }
+                }
+            });
+
+            // Update the boundaries of the other categories in the tree.
+            await prisma.category.updateMany({
+                where: {
+                    workspaceId: categoryToDelete.workspaceId,
+                    lft: {
+                        gt: categoryToDelete.rgt
+                    }
+                },
+                data: {
+                    lft: {
+                        decrement: categorySize + 1
+                    },
+                    rgt: {
+                        decrement: categorySize + 1
+                    }
+                }
+            });
+
+            return categoryToDelete;
+        }else{
+            // If category has no children
+            await prisma.category.delete({
+                where: {
+                    id: id
+                }
+            });
+
+            // Update the boundaries of the other categories in the tree.
+            await prisma.category.updateMany({
+                where: {
+                    workspaceId: categoryToDelete.workspaceId,
+                    lft: {
+                        gt: categoryToDelete.rgt
+                    }
+                },
+                data: {
+                    lft: {
+                        decrement: 2
+                    },
+                    rgt: {
+                        decrement: 2
+                    }
+                }
+            });
+
+            return categoryToDelete;
+        }
     }
 }
