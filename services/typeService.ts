@@ -1,5 +1,6 @@
 import prisma from '../configurations/dbinit';
 import { Type } from '@prisma/client';
+import { TypeBaseDM, TypeDM } from '../dataModels/TypeDataModel';
 
 export class TypeService {
     static async getAll(): Promise<Type[]> {
@@ -27,27 +28,27 @@ export class TypeService {
         return type;
     }
 
-    static async create(name: string): Promise<Type> {
-        const type = await prisma.type.create({
+    static async create(type: TypeBaseDM): Promise<Type> {
+        const typeCreated = await prisma.type.create({
             data: {
-                name: name
+                ...type
             }
         });
 
-        return type;
+        return typeCreated;
     }
 
-    static async update(id: string, name: string): Promise<Type | null> {
-        const type = await prisma.type.update({
+    static async update(id: string, type: TypeBaseDM): Promise<Type | null> {
+        const typeUpdated = await prisma.type.update({
             where: {
                 id: id
             },
             data: {
-                name: name
+                ...type
             }
         });
 
-        return type;
+        return typeUpdated;
     }
 
     static async delete(id: string): Promise<Type | null> {
