@@ -28,6 +28,16 @@ export class UserService {
 
         return user;
     }
+
+    static async create(user: UserBaseDM): Promise<User> {
+        const userCreated = await prisma.user.create({
+            data: {
+                ...user
+            }
+        });
+
+        return userCreated;
+    }
     
     static async update(id: string, user: UserBaseDM): Promise<User | null> {
         const userUpdated = await prisma.user.update({

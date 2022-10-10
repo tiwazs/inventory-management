@@ -5,21 +5,21 @@ const router = express.Router();
 export interface ItemBaseDM {
     workspaceId: string;
     categoryId: string;
-    locationId: string;
-    typesId: string;
-    barcode: string;
-    serialNumber: string;
+    locationId: string | null;
+    typeId: string;
+    barcode: string | null;
+    serialNumber: string | null;
     quantity: number;
     name: string;
-    description: string;
-    wholeSalePriceInd: number;
-    retailPriceInd: number;
-    wholeSalePrice: number;
-    retailPrice: number;
-    length: number;
-    width: number;
-    height: number;
-    weight: number;
+    description: string | null;
+    wholeSalePriceInd: number | null;
+    retailPriceInd: number | null;
+    wholeSalePrice: number | null;
+    retailPrice: number | null;
+    length: number | null;
+    width: number | null;
+    height: number | null;
+    weight: number | null;
     forSale: boolean;
 }
 

@@ -71,6 +71,40 @@ export interface UserDM extends UserBaseDM {
  *              name:
  *                  type: string
  *                  description: Username set by user
+ *              email:
+ *                  type: string
+ *                  description: Email set by user
+ *              password:
+ *                  type: string
+ *                  description: key to access
+ *              firstName:
+ *                  type: string
+ *                  description: first name of the user
+ *              lastName:
+ *                  type: string
+ *                  description: last name of the user
+ *              image: 
+ *                 type: string 
+ *                 description: image of the user
+*/
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      userToCreate:
+ *          type: object
+ *          required:
+ *              - name
+ *              - email
+ *              - password
+ *          properties:
+ *              name:
+ *                  type: string
+ *                  description: Username set by user
+ *              email:
+ *                  type: string
+ *                  description: Email set by user
  *              password:
  *                  type: string
  *                  description: key to access

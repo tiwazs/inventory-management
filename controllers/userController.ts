@@ -21,7 +21,7 @@ import { UserService } from '../services/userService';
  */
 
 router.get('/', async (req, res) => {
-  const users = await UserService.findAll();
+    const users = await UserService.getAll();
     return res.status(200).json(users);
 });
 
@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try{
-        const user = await UserService.findById(id);
+        const user = await UserService.getById(id);
         if(user){
             return res.status(200).json(user);
         }
@@ -109,7 +109,7 @@ router.get('/:id', async (req, res) => {
 router.get('/email/:email', async (req, res) => {
     const { email } = req.params;
     try{
-        const user = await UserService.findEmail(email);
+        const user = await UserService.getEmail(email);
         if(user){
             return res.status(200).json(user);
         }
