@@ -41,7 +41,7 @@ app.use(morgan('dev'));
 app.use('/api/user', require('./controllers/userController'));
 app.use('/api/type', require('./controllers/typeController'));
 app.use('/api/workspace', require('./controllers/workspaceController'));
-//app.use('/api/category', require('./controllers/categoryController'));
+app.use('/api/category', require('./controllers/categoryController'));
 //app.use('/api/location', require('./controllers/locationController'));
 //app.use('/api/item', require('./controllers/itemController'));
 

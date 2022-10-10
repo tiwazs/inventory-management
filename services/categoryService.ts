@@ -93,7 +93,18 @@ export class CategoryService {
                     data: {
                         lft: {
                             increment: 2
-                        },
+                        }
+                    }
+                });
+
+                await prisma.category.updateMany({
+                    where: {
+                        workspaceId: category.workspaceId,
+                        rgt: {
+                            gt: parentCategory.lft
+                        }
+                    },
+                    data: {
                         rgt: {
                             increment: 2
                         }
