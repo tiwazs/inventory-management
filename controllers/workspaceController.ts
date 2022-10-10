@@ -84,8 +84,8 @@ router.post("/", async (req, res) => {
     const { body } = req;
     try {
         if (
-            "name" in body && typeof body.name === "string" &&
-            "description" in body && typeof body.description === "string"
+            "userId" in body && typeof body.userId === "string" &&
+            "name" in body && typeof body.name === "string"
         ) {
             const workspace = await WorkspaceService.create(body);
             return res.status(200).json(workspace);
@@ -132,8 +132,7 @@ router.put("/:id", async (req, res) => {
     const { body } = req;
     try {
         if (
-            "name" in body && typeof body.name === "string" &&
-            "description" in body && typeof body.description === "string"
+            "name" in body && typeof body.name === "string"
         ) {
             const workspace = await WorkspaceService.update(id, body);
             return res.status(200).json(workspace);
