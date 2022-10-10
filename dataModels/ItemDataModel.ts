@@ -23,7 +23,7 @@ export interface ItemBaseDM {
     forSale: boolean;
 }
 
-export interface ItemToCreateDM extends ItemBaseDM {
+export interface ItemDM extends ItemBaseDM {
     id: string;
     createdAt: Date;
     updatedAt: Date;
