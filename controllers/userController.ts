@@ -178,19 +178,11 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { body } = req;
     try{
-        if(
-            "name" in body && typeof body.name === "string" &&
-            "password" in body && typeof body.password === "string" &&
-            "firstName" in body && typeof body.firstName === "string" &&
-            "lastName" in body && typeof body.lastName === "string"
-        ){
-            const user = await UserService.update(id, body);
-            if(user){
-                return res.status(200).json(user);
-            }
-            return res.status(404).json({message: "User not found"});
+        const user = await UserService.update(id, body);
+        if(user){
+            return res.status(200).json(user);
         }
-        return res.status(400).json({message: "Invalid request"});
+        return res.status(404).json({message: "User not found"});
     }catch(e){
         return res.status(400).json({message: `Error updating User ${e}`});
     }

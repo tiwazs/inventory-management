@@ -130,13 +130,8 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { body } = req;
     try{
-        if(
-            "name" in body && typeof body.name === "string"
-        ){
-            const type = await TypeService.update(id, body);
-            return res.status(200).json(type);
-        }
-        return res.status(400).json({message: "Invalid request"});
+        const type = await TypeService.update(id, body);
+        return res.status(200).json(type);
     }catch(e){
         return res.status(400).json({message: `Error updating Type ${e}`});
     }
