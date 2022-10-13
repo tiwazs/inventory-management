@@ -8,6 +8,15 @@ export class CategoryService {
         return categories;
     }
 
+    static async getByWorkspaceId(workspaceId: string): Promise<Category[]> {
+        const categories = await prisma.category.findMany({
+            where: {
+                workspaceId: workspaceId
+            }
+        });
+        return categories;
+    }
+
     static async getById(id: string): Promise<Category | null> {
         const category = await prisma.category.findUnique({
             where: {
@@ -137,7 +146,7 @@ export class CategoryService {
     */
     static async delete(id: string): Promise<Category | null> {
         const categoryToDelete = await prisma.category.findUnique({ where: { id: id } });
-        if(!categoryToDelete) { throw new Error('Category not found'); }
+        if(!categoryToDelete) { return null; }
 
         const categorySize = categoryToDelete.rgt - categoryToDelete.lft;
         const hasChildren: boolean = (categorySize > 1) ? true : false;

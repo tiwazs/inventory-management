@@ -27,6 +27,43 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /api/category/workspace/{workspaceId}:
+ *  get:
+ *      summary: Return Categories by workspaceId
+ *      tags: [Categories]
+ *      parameters:
+ *          -   in: path
+ *              name: workspaceId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: Workspace id
+ *      responses:
+ *          200:
+ *              description: list of all categories for a workspace
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/category'
+ *                                
+ */
+
+router.get('/workspace/:workspaceId', async (req, res) => {
+    const { workspaceId } = req.params;
+    try{
+        const categories = await CategoryService.getByWorkspaceId(workspaceId);
+        if (categories) { return res.status(200).json(categories); }
+        
+        return res.status(404).send();
+    }catch(err){
+        return res.status(400).json({message: "Invalid data"});
+    }
+});
+
+/**
+ * @swagger
  * /api/category:
  *  post:
  *      summary: Create a new category
@@ -61,8 +98,8 @@ router.post('/', async (req, res) => {
         }else{
             return res.status(400).json({message: "Invalid data"});
         }
-    }catch(err){
-        return res.status(400).json({message: "Invalid data"});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -92,9 +129,16 @@ router.post('/', async (req, res) => {
  */
 
 router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    const category = await CategoryService.getById(id);
-    return res.status(200).json(category);
+    try{
+        const { id } = req.params;
+        const category = await CategoryService.getById(id);
+        
+        if (category) { return res.status(200).json(category); }
+                
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).json(error);
+    }
 });
 
 //router.put('/:id', async (req, res) => {
@@ -142,9 +186,16 @@ router.get('/:id', async (req, res) => {
  */
 
 router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-    const category = await CategoryService.delete(id);
-    return res.status(200).json(category);
+    try{
+        const { id } = req.params;
+        const category = await CategoryService.delete(id);
+        
+        if(category){return res.status(200).json(category);}
+        
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).json(error);
+    }
 });
 
 module.exports = router;
