@@ -59,8 +59,9 @@ router.post('/', async (req, res) => {
             const location = await LocationService.create(body);
             return res.status(200).json(location);
         }
-    }catch(err){
-        return res.status(404).json(err);
+        return res.status(400).json({message: "Invalid body"});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -95,9 +96,11 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const location = await LocationService.getById(id);
-        return res.status(200).json(location);
-    }catch(err){
-        return res.status(404).json(err);
+        if(location) return res.status(200).json(location);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -137,9 +140,11 @@ router.put('/:id', async (req, res) => {
     const { body } = req;
     try{
         const location = await LocationService.update(id, body);
-        return res.status(200).json(location);
-    }catch(err){
-        return res.status(404).json(err);
+        if(location) return res.status(200).json(location);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -172,12 +177,11 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const location = await LocationService.delete(id);
-        if(location){
-            return res.status(200).json(location);
-        }
-        return res.status(404).json({message: "User not found"});
-    }catch(err){
-        return res.status(404).json(err);
+        if(location) return res.status(200).json(location);
+        
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
