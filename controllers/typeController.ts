@@ -51,9 +51,15 @@ router.get('/', async (req, res) => {
  */
 
 router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    const type = await TypeService.getById(id);
-    return res.status(200).json(type);
+    try{
+        const { id } = req.params;
+        const type = await TypeService.getById(id);
+        if(type) return res.status(200).json(type);
+
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).json(error);
+    }
 });
 
 /**
@@ -90,8 +96,8 @@ router.post('/', async (req, res) => {
             return res.status(200).json(type);
         }
         return res.status(400).json({message: "Invalid request"});
-    }catch(e){
-        return res.status(400).json({message: `Error creating Type ${e}`});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -131,9 +137,11 @@ router.put('/:id', async (req, res) => {
     const { body } = req;
     try{
         const type = await TypeService.update(id, body);
-        return res.status(200).json(type);
-    }catch(e){
-        return res.status(400).json({message: `Error updating Type ${e}`});
+        if(type) return res.status(200).json(type);
+        
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -166,12 +174,11 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const user = await TypeService.delete(id);
-        if(user){
-            return res.status(200).json(user);
-        }
-        return res.status(404).json({message: "Type not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error deleting User ${e}`});
+        if(user) return res.status(200).json(user);
+        
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
