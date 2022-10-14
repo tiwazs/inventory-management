@@ -51,9 +51,15 @@ router.get("/", async (req, res) => {
  */
 
 router.get("/:id", async (req, res) => {
-    const { id } = req.params;
-    const workspace = await WorkspaceService.getById(id);
-    return res.status(200).json(workspace);
+    try{
+        const { id } = req.params;
+        const workspace = await WorkspaceService.getById(id);
+        if(workspace) return res.status(200).json(workspace);
+
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).json(error);
+    }
 });
 
 /**
@@ -91,8 +97,8 @@ router.post("/", async (req, res) => {
             return res.status(200).json(workspace);
         }
         return res.status(400).json({ message: "Invalid request" });
-    } catch (e) {
-        return res.status(400).json({ message: `Error creating Workspace ${e}` });
+    } catch (error) {
+        return res.status(500).json(error);
     }
 });
 
@@ -131,15 +137,12 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { body } = req;
     try {
-        if (
-            "name" in body && typeof body.name === "string"
-        ) {
-            const workspace = await WorkspaceService.update(id, body);
-            return res.status(200).json(workspace);
-        }
-        return res.status(400).json({ message: "Invalid request" });
-    } catch (e) {
-        return res.status(400).json({ message: `Error updating Workspace ${e}` });
+        const workspace = await WorkspaceService.update(id, body);
+        if(workspace) return res.status(200).json(workspace);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -172,12 +175,11 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try{
         const workspace = await WorkspaceService.delete(id);
-        if(workspace){
-            return res.status(200).json(workspace);
-        }
-        return res.status(404).json({message: "Type not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error deleting User ${e}`});
+        if(workspace) return res.status(200).json(workspace);
+        
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
