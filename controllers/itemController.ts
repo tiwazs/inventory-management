@@ -56,9 +56,11 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;    
     try{
         const item = await ItemService.getById(id);
-        return res.status(200).json(item);
-    }catch(err){
-        return res.status(404).json(err);
+        if(item) return res.status(200).json(item);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -98,8 +100,9 @@ router.post('/', async (req, res) => {
             const item = await ItemService.create(body);
             return res.status(200).json(item);
         }
-    }catch(err){
-        return res.status(400).json(err);
+        return res.status(400).json({message: "Invalid data"});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -139,9 +142,11 @@ router.put('/:id', async (req, res) => {
     const { body } = req;
     try{
         const item = await ItemService.update(id, body);
-        return res.status(200).json(item);
-    }catch(err){
-        return res.status(400).json(err);
+        if(item) return res.status(200).json(item);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -174,9 +179,11 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const item = await ItemService.delete(id);
-        return res.status(200).json(item);
-    }catch(err){
-        return res.status(404).json(err);
+        if(item) return res.status(200).json(item);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
