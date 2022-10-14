@@ -61,8 +61,8 @@ router.post('/', async (req, res) => {
             return res.status(200).json(user);
         }
         return res.status(400).json({message: "Invalid request"});
-    }catch(e){
-        return res.status(400).json({message: `Error creating User ${e}`});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -96,12 +96,11 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const user = await UserService.getById(id);
-        if(user){
-            return res.status(200).json(user);
-        }
-        return res.status(404).json({message: "User not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error finding User ${e}`});
+        if(user) return res.status(200).json(user);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -134,12 +133,11 @@ router.get('/email/:email', async (req, res) => {
     const { email } = req.params;
     try{
         const user = await UserService.getEmail(email);
-        if(user){
-            return res.status(200).json(user);
-        }
-        return res.status(404).json({message: "User not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error finding User ${e}`});
+        if(user) return res.status(200).json(user);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -179,12 +177,11 @@ router.put('/:id', async (req, res) => {
     const { body } = req;
     try{
         const user = await UserService.update(id, body);
-        if(user){
-            return res.status(200).json(user);
-        }
-        return res.status(404).json({message: "User not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error updating User ${e}`});
+        if(user) return res.status(200).json(user);
+        
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -217,12 +214,11 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try{
         const user = await UserService.delete(id);
-        if(user){
-            return res.status(200).json(user);
-        }
-        return res.status(404).json({message: "User not found"});
-    }catch(e){
-        return res.status(400).json({message: `Error deleting User ${e}`});
+        if(user) return res.status(200).json(user);
+
+        return res.status(404).json();
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
