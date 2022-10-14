@@ -54,11 +54,11 @@ router.get('/workspace/:workspaceId', async (req, res) => {
     const { workspaceId } = req.params;
     try{
         const categories = await CategoryService.getByWorkspaceId(workspaceId);
-        if (categories) { return res.status(200).json(categories); }
+        if (Array.isArray(categories) && categories.length) return res.status(200).json(categories);
         
         return res.status(404).send();
-    }catch(err){
-        return res.status(400).json({message: "Invalid data"});
+    }catch(error){
+        return res.status(500).json(error);
     }
 });
 
@@ -133,7 +133,7 @@ router.get('/:id', async (req, res) => {
         const { id } = req.params;
         const category = await CategoryService.getById(id);
         
-        if (category) { return res.status(200).json(category); }
+        if (category) return res.status(200).json(category);
                 
         return res.status(404).send();
     }catch(error){
@@ -190,7 +190,7 @@ router.delete('/:id', async (req, res) => {
         const { id } = req.params;
         const category = await CategoryService.delete(id);
         
-        if(category){return res.status(200).json(category);}
+        if(category) return res.status(200).json(category);
         
         return res.status(404).send();
     }catch(error){
