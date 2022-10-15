@@ -8,6 +8,30 @@ export class CategoryService {
         return categories;
     }
 
+    static async getTree(parentId: string): Promise<Category[]> {
+        const parent = await prisma.category.findFirst({
+            where: {
+                id: parentId
+            }
+        });
+
+        if (Array.isArray(parent) && parent.length) return [];
+        if (!parent) return [];
+
+        const categories = await prisma.category.findMany({
+            where: {
+                lft: {
+                    gte: parent.lft
+                },
+                rgt: {
+                    lte: parent.rgt
+                }
+            }
+        });
+
+        return categories;
+    }
+
     static async getByWorkspaceId(workspaceId: string): Promise<Category[]> {
         const categories = await prisma.category.findMany({
             where: {
