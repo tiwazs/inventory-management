@@ -27,6 +27,44 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /api/item/workspace/{workspaceId}:
+ *  get:
+ *      summary: Return Categories tree by workspaceId
+ *      tags: [Items]
+ *      parameters:
+ *          -   in: path
+ *              name: workspaceId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: Workspace id
+ *      responses:
+ *          200:
+ *              description: list of all items in a workspace
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/category'
+ *                                
+ */
+
+ router.get('/workspace/:workspaceId', async (req,res) => {
+    const { workspaceId } = req.params;
+    try{
+        const items = await ItemService.getAllByWorkspaceId(workspaceId);
+        if(Array.isArray(items) && items.length) return res.status(200).json(items);
+
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).send(error);
+    }
+});
+
+
+/**
+ * @swagger
  * /api/item/category/{categoryId}:
  *  get:
  *      summary: Return Categories tree by parentId

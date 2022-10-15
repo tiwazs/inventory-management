@@ -9,6 +9,18 @@ export class ItemService {
         return items;
     }
 
+    static async getAllByWorkspaceId(workspaceId: string): Promise<Item[]> {
+        if(workspaceId === null) return [];
+
+        const items = prisma.item.findMany({
+            where: {
+                workspaceId: workspaceId
+            }
+        });
+
+        return items;
+    }
+
     static async getAllByCategoryId(categoryId: string): Promise<Item[]> {
         const categories = await CategoryService.getTree(categoryId);
 
