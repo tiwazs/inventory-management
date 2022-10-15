@@ -106,6 +106,45 @@ router.get('/:id', async (req, res) => {
 
 /**
  * @swagger
+ * /api/location/workspace/{workspaceId}:
+ *  get:
+ *      summary: Return location by workspaceId
+ *      tags: [Locations]
+ *      parameters:
+ *          -   in: path
+ *              name: workspaceId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: Workspace Id
+ *      responses:
+ *          200:
+ *              description: list of locations by workspaceId
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/location'
+ *          404:
+ *              description: Location not found
+ *                                
+ */
+
+router.get('/workspace/:workspaceId', async (req, res) => {
+    const { workspaceId } = req.params;
+    try{
+        const locations = await LocationService.getByWorkspaceId(workspaceId);
+        if(Array.isArray(locations) && locations.length) return res.status(200).json(locations);
+
+        return res.status(404).json();
+    }catch{
+        return res.status(500).json();
+    }
+});
+
+/**
+ * @swagger
  * /api/location/{id}:
  *  put:
  *      summary: Updates location by id

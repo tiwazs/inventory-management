@@ -18,6 +18,16 @@ export class LocationService {
         return location;
     }
 
+    static async getByWorkspaceId(workspaceId: string): Promise<Location[]> {
+        const locations = await prisma.location.findMany({
+            where: {
+                workspaceId: workspaceId
+            }
+        });
+
+        return locations;
+    }
+
     static async getByName(name: string): Promise<Location | null> {
         const location = await prisma.location.findFirst({
             where: {
