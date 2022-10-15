@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import cors from 'cors';
+import customMorgan from './lib/customMorgan';
 
 
 /************************************************************************************************
@@ -35,7 +36,7 @@ app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDcos));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('dev'));
+app.use(customMorgan);
 
 // API
 app.use('/api/user', require('./controllers/userController'));
