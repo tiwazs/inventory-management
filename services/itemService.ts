@@ -9,25 +9,40 @@ export class ItemService {
         return items;
     }
 
-    static async getAllByWorkspaceId(workspaceId: string): Promise<Item[]> {
+    static async getAllByWorkspaceIdQ(workspaceId: string, 
+                                      typeId: string | undefined, 
+                                      categoryId: string | undefined, 
+                                      locationId: string | undefined)
+                                      : Promise<Item[]> {
         if(workspaceId === null) return [];
+        
+        let categories;
+        let categoryIds;
+        if(categoryId !== undefined){ 
+            categories = await CategoryService.getTree(categoryId);
+            categoryIds = categories.map(category => category.id);
+        }
 
-        const items = prisma.item.findMany({
+        const items = await prisma.item.findMany({
             where: {
-                workspaceId: workspaceId
+                workspaceId: workspaceId,
+                typeId: typeId,
+                locationId: locationId,
+                categoryId: {
+                    in: categoryIds
+                }
             }
         });
 
         return items;
+        
     }
 
     static async getAllByCategoryId(categoryId: string): Promise<Item[]> {
         const categories = await CategoryService.getTree(categoryId);
-
         if(!(Array.isArray(categories) && categories.length)) return [];
 
         const categoryIds = categories.map(category => category.id);
-
         const items = await prisma.item.findMany({
             where: {
                 categoryId: {

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 const router = express.Router();
 import { ItemService } from '../services/itemService';
 
@@ -38,6 +38,24 @@ router.get('/', async (req, res) => {
  *                  type: string
  *              required: true
  *              description: Workspace id
+ *          -   in: query
+ *              name: typeId
+ *              schema:
+ *                  type: string
+ *              required: false
+ *              description: Type id
+ *          -   in: query
+ *              name: categoryId
+ *              schema:
+ *                  type: string
+ *              required: false
+ *              description: Category id
+ *          -   in: query
+ *              name: locationId
+ *              schema:
+ *                  type: string
+ *              required: false
+ *              description: Location id
  *      responses:
  *          200:
  *              description: list of all items in a workspace
@@ -50,10 +68,18 @@ router.get('/', async (req, res) => {
  *                                
  */
 
- router.get('/workspace/:workspaceId', async (req,res) => {
+interface ItemsByWorkspaceQuery {
+    typeId: string;
+    categoryId: string;
+    locationId: string;
+}
+
+router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;}, any, any, ItemsByWorkspaceQuery>,res) => {
     const { workspaceId } = req.params;
+    const { typeId, categoryId, locationId } = req.query;
+
     try{
-        const items = await ItemService.getAllByWorkspaceId(workspaceId);
+        const items = await ItemService.getAllByWorkspaceIdQ(workspaceId, typeId, categoryId, locationId);
         if(Array.isArray(items) && items.length) return res.status(200).json(items);
 
         return res.status(404).send();
