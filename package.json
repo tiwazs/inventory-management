@@ -6,7 +6,9 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npm run build\" \"npm run start\""
+    "buildRun": "tsc && node dist/index.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run buildRun\"",
+    "dev2": "concurrently \"npm run build\" \"npm run start\""
   },
   "author": "",
   "license": "ISC",

@@ -27,6 +27,18 @@ export class ItemService {
         return items;
     }
 
+    static async getAllByLocationId(locationId: string): Promise<Item[]> {
+        if(locationId === null) return [];
+
+        const items = prisma.item.findMany({
+            where: {
+                locationId: locationId
+            }
+        });
+
+        return items;
+    }
+
     static async getById(id: string): Promise<Item | null> {
         const item = await prisma.item.findFirst({
             where: {

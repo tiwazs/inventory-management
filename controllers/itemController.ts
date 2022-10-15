@@ -62,6 +62,43 @@ router.get('/category/:categoryId', async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/item/location/{locationId}:
+ *  get:
+ *      summary: Return Categories tree by locationId
+ *      tags: [Items]
+ *      parameters:
+ *          -   in: path
+ *              name: locationId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: Location id
+ *      responses:
+ *          200:
+ *              description: list of all items in a location
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/category'
+ *                                
+ */
+
+router.get('/location/:locationId', async (req,res) => {
+    const { locationId } = req.params;
+    try{
+        const items = await ItemService.getAllByLocationId(locationId);
+        if(Array.isArray(items) && items.length) return res.status(200).json(items);
+
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).send(error);
+    }
+});
+
 
 /**
  * @swagger
