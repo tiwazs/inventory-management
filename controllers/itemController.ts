@@ -27,6 +27,44 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
+ * /api/item/category/{categoryId}:
+ *  get:
+ *      summary: Return Categories tree by parentId
+ *      tags: [Items]
+ *      parameters:
+ *          -   in: path
+ *              name: categoryId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: Category id
+ *      responses:
+ *          200:
+ *              description: list of all items in a category tree
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/category'
+ *                                
+ */
+
+router.get('/category/:categoryId', async (req, res) => {
+    const { categoryId } = req.params;
+    try{
+        const items = await ItemService.getAllByCategoryId(categoryId);
+        if(Array.isArray(items) && items.length) return res.status(200).json(items);
+
+        return res.status(404).send();
+    }catch(error){
+        return res.status(500).send(error);
+    }
+});
+
+
+/**
+ * @swagger
  * /api/item/{id}:
  *  get:
  *      summary: Return item by id

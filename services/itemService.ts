@@ -1,10 +1,29 @@
 import prisma from '../configurations/dbinit';
 import { Item } from '@prisma/client';
 import { ItemBaseDM } from '../dataModels/ItemDataModel';
+import { CategoryService } from './categoryService';
 
 export class ItemService {
     static async getAll(): Promise<Item[]> {
         const items = await prisma.item.findMany();
+        return items;
+    }
+
+    static async getAllByCategoryId(categoryId: string): Promise<Item[]> {
+        const categories = await CategoryService.getTree(categoryId);
+
+        if(!(Array.isArray(categories) && categories.length)) return [];
+
+        const categoryIds = categories.map(category => category.id);
+
+        const items = await prisma.item.findMany({
+            where: {
+                categoryId: {
+                    in: categoryIds
+                }
+            }
+        });
+
         return items;
     }
 
