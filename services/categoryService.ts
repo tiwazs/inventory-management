@@ -32,12 +32,27 @@ export class CategoryService {
         return categories;
     }
 
-    static async getByWorkspaceId(workspaceId: string): Promise<Category[]> {
-        const categories = await prisma.category.findMany({
+    static async getByWorkspaceIdQ(workspaceId: string, categoryId: string | undefined): Promise<Category[]> {
+        let parent: Category | null | undefined;
+        
+        if(categoryId!==undefined) parent = await prisma.category.findFirst({
             where: {
-                workspaceId: workspaceId
+                id: categoryId
             }
         });
+        
+        const categories = await prisma.category.findMany({
+            where: {
+                workspaceId: workspaceId,
+                lft: {
+                    gte: (parent===undefined || parent===null) ? undefined : parent.lft
+                },
+                rgt: {
+                    lte: (parent===undefined || parent===null) ? undefined : parent.rgt
+                }
+            }
+        });
+
         return categories;
     }
 

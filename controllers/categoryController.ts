@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request } from 'express';
 import { CategoryService } from '../services/categoryService';
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
  * @swagger
  * /api/category/workspace/{workspaceId}:
  *  get:
- *      summary: Return Categories by workspaceId
+ *      summary: Return Categories by workspaceId v
  *      tags: [Categories]
  *      parameters:
  *          -   in: path
@@ -38,6 +38,12 @@ router.get('/', async (req, res) => {
  *                  type: string
  *              required: true
  *              description: Workspace id
+ *          -   in: query
+ *              name: categoryId
+ *              schema:
+ *                  type: string
+ *              required: false
+ *              description: Category id
  *      responses:
  *          200:
  *              description: list of all categories for a workspace
@@ -50,47 +56,15 @@ router.get('/', async (req, res) => {
  *                                
  */
 
-router.get('/workspace/:workspaceId', async (req, res) => {
+interface CategoriesByWorkspaceQuery {
+    categoryId: string;
+}
+
+router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;},any,any, CategoriesByWorkspaceQuery>, res) => {
     const { workspaceId } = req.params;
+    const { categoryId } = req.query;
     try{
-        const categories = await CategoryService.getByWorkspaceId(workspaceId);
-        if (Array.isArray(categories) && categories.length) return res.status(200).json(categories);
-        
-        return res.status(404).send();
-    }catch(error){
-        return res.status(500).json(error);
-    }
-});
-
-/**
- * @swagger
- * /api/category/tree/{parentId}:
- *  get:
- *      summary: Return Categories tree by parentId
- *      tags: [Categories]
- *      parameters:
- *          -   in: path
- *              name: parentId
- *              schema:
- *                  type: string
- *              required: true
- *              description: parent id
- *      responses:
- *          200:
- *              description: list of all categories in a tree
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: array
- *                          items:
- *                              $ref: '#/components/schemas/category'
- *                                
- */
-
- router.get('/tree/:parentId', async (req, res) => {
-    const { parentId } = req.params;
-    try{
-        const categories = await CategoryService.getTree(parentId);
+        const categories = await CategoryService.getByWorkspaceIdQ(workspaceId, categoryId);
         if (Array.isArray(categories) && categories.length) return res.status(200).json(categories);
         
         return res.status(404).send();
