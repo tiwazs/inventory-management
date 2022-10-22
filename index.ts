@@ -1,9 +1,9 @@
 import express from 'express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import morgan from 'morgan';
 import cors from 'cors';
 import customMorgan from './middlewares/customMorgan';
+import authenticator from './middlewares/authenticator';
 
 
 /************************************************************************************************
@@ -22,7 +22,18 @@ const swaggerOptions = {
       {
         url: `http://localhost:${process.env.PORT || 3000}`
       }
-    ]
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          in: 'header',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [ { bearerAuth: [] } ],
   },
   apis: ["./controllers/*.ts", "./dataModels/*.ts"],
 }
@@ -40,12 +51,12 @@ app.use(customMorgan);
 
 // API
 app.use('/api/auth', require('./controllers/authenticationController'));
-app.use('/api/user', require('./controllers/userController'));
-app.use('/api/type', require('./controllers/typeController'));
-app.use('/api/workspace', require('./controllers/workspaceController'));
-app.use('/api/category', require('./controllers/categoryController'));
-app.use('/api/location', require('./controllers/locationController'));
-app.use('/api/item', require('./controllers/itemController'));
+app.use('/api/user', authenticator, require('./controllers/userController'));
+app.use('/api/type', authenticator, require('./controllers/typeController'));
+app.use('/api/workspace', authenticator, require('./controllers/workspaceController'));
+app.use('/api/category', authenticator, require('./controllers/categoryController'));
+app.use('/api/location', authenticator, require('./controllers/locationController'));
+app.use('/api/item', authenticator, require('./controllers/itemController'));
 
 
 app.listen(app.get('PORT'), () => {
