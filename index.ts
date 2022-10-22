@@ -3,7 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import cors from 'cors';
-import customMorgan from './lib/customMorgan';
+import customMorgan from './middlewares/customMorgan';
 
 
 /************************************************************************************************
