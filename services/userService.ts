@@ -2,7 +2,6 @@ import prisma from '../configurations/dbinit';
 import { User } from '@prisma/client';
 import { UserBaseDM } from '../dataModels/UserDataModel';
 
-
 export class UserService {
     static async getAll(): Promise<User[]> {
         const users = await prisma.user.findMany();
@@ -27,16 +26,6 @@ export class UserService {
         });
 
         return user;
-    }
-
-    static async create(user: UserBaseDM): Promise<User> {
-        const userCreated = await prisma.user.create({
-            data: {
-                ...user
-            }
-        });
-
-        return userCreated;
     }
     
     static async update(id: string, user: UserBaseDM): Promise<User | null> {
