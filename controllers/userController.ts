@@ -27,48 +27,6 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
- * /api/user:
- *  post:
- *      summary: Create a new user
- *      tags: [Users]
- *      requestBody:
- *          required: true
- *          content: 
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/userToCreate'
- *      responses:
- *          200:
- *              description: User created
- *              content:
- *                  application/json:
- *                      schema:
- *                          $ref: '#/components/schemas/user'
- *          404:
- *              description: Object not found
- *                                
- */
-
-router.post('/', async (req, res) => {
-    const { body } = req;
-    try{
-        if(
-            "name" in body && typeof body.name === "string" &&
-            "email" in body && typeof body.email === "string" &&
-            "password" in body && typeof body.password === "string"
-        ){
-            const user = await UserService.create(body);
-            return res.status(200).json(user);
-        }
-        return res.status(400).json({message: "Invalid request"});
-    }catch(error){
-        return res.status(500).json(error);
-    }
-});
-
-
-/**
- * @swagger
  * /api/user/{id}:
  *  get:
  *      summary: Return user by id
