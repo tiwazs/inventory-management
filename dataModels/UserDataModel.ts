@@ -4,8 +4,8 @@ const router = express.Router();
 /**************************************************|User Data Models|**********************************************/
 export interface UserBaseDM {
     name: string | null | undefined;
-    email: string | null | undefined;
-    password: string | null | undefined;
+    email: string;
+    password: string;
     firstName: string | null | undefined;
     lastName: string | null | undefined;
     image: string | null | undefined;
