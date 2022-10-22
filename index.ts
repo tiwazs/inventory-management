@@ -39,6 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(customMorgan);
 
 // API
+app.use('/api/auth', require('./controllers/authenticationController'));
 app.use('/api/user', require('./controllers/userController'));
 app.use('/api/type', require('./controllers/typeController'));
 app.use('/api/workspace', require('./controllers/workspaceController'));
