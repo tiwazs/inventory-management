@@ -8,6 +8,8 @@ import { UserService } from '../services/userService';
  *  get:
  *      summary: Return all users
  *      tags: [Users]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: list of all users
@@ -31,6 +33,8 @@ router.get('/', async (req, res) => {
  *  get:
  *      summary: Return user by id
  *      tags: [Users]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -68,6 +72,8 @@ router.get('/:id', async (req, res) => {
  *  get:
  *      summary: Return user by email
  *      tags: [Users]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: email
@@ -105,6 +111,8 @@ router.get('/email/:email', async (req, res) => {
  *  put:
  *      summary: Updates user
  *      tags: [Users]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -149,6 +157,8 @@ router.put('/:id', async (req, res) => {
  *  delete:
  *      summary: Deletes a user by id
  *      tags: [Users]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id

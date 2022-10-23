@@ -8,6 +8,8 @@ import { LocationService } from '../services/locationService';
  *  get:
  *      summary: Return all locations
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: Location
@@ -31,6 +33,8 @@ router.get('/', async (req, res) => {
  *  post:
  *      summary: Create a new location
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      requestBody:
  *          required: true
  *          content: 
@@ -71,6 +75,8 @@ router.post('/', async (req, res) => {
  *  get:
  *      summary: Return location by id
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -110,6 +116,8 @@ router.get('/:id', async (req, res) => {
  *  get:
  *      summary: Return location by workspaceId
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: workspaceId
@@ -149,6 +157,8 @@ router.get('/workspace/:workspaceId', async (req, res) => {
  *  put:
  *      summary: Updates location by id
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -193,6 +203,8 @@ router.put('/:id', async (req, res) => {
  *  delete:
  *      summary: Deletes a location by id
  *      tags: [Locations]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id

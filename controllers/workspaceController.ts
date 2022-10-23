@@ -8,6 +8,8 @@ const router = express.Router();
  *  get:
  *      summary: Return all workspaces
  *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: list of all workspaces
@@ -31,6 +33,8 @@ router.get("/", async (req, res) => {
  *  get:
  *      summary: Return workspace by id
  *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -68,6 +72,8 @@ router.get("/:id", async (req, res) => {
  *  post:
  *      summary: Create a new workspace
  *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
  *      requestBody:
  *          required: true
  *          content: 
@@ -108,6 +114,8 @@ router.post("/", async (req, res) => {
  *  put:
  *      summary: Updates workspace by id
  *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -152,6 +160,8 @@ router.put("/:id", async (req, res) => {
  *  delete:
  *      summary: Deletes a workspace by id
  *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id

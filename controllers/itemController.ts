@@ -8,6 +8,8 @@ import { ItemService } from '../services/itemService';
  *  get:
  *      summary: Return all items
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: Item
@@ -31,6 +33,8 @@ router.get('/', async (req, res) => {
  *  get:
  *      summary: Return Categories tree by workspaceId
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: workspaceId
@@ -95,6 +99,8 @@ router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;}
  *  get:
  *      summary: Return Categories tree by parentId
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: categoryId
@@ -132,6 +138,8 @@ router.get('/category/:categoryId', async (req, res) => {
  *  get:
  *      summary: Return Categories tree by locationId
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: locationId
@@ -170,6 +178,8 @@ router.get('/location/:locationId', async (req,res) => {
  *  get:
  *      summary: Return item by id
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -209,6 +219,8 @@ router.get('/:id', async (req, res) => {
  *  post:
  *      summary: Create a new item
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      requestBody:
  *          required: true
  *          content: 
@@ -251,6 +263,8 @@ router.post('/', async (req, res) => {
  *  put:
  *      summary: Updates item by id
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -295,6 +309,8 @@ router.put('/:id', async (req, res) => {
  *  delete:
  *      summary: Deletes a item by id
  *      tags: [Items]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id

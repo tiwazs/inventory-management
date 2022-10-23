@@ -8,10 +8,10 @@ import logger from "../lib/logger";
 
 export class AuthenticationService {
 
-    static async login(username: string, password: string) {
-        if(!username || !password) { throw new Error("Username and password are required"); }
+    static async login(email: string, password: string) {
+        if(!email || !password) { throw new Error("Username and password are required"); }
 
-        const user = await UserService.getEmail(username);
+        const user = await UserService.getEmail(email);
         if (!user) { throw new Error("User not found");}
         
         // Matching password
@@ -20,7 +20,10 @@ export class AuthenticationService {
         logger.debug( `Password matched` );
         // Creating an access token for the user
         const token = jwt.sign(
-            {user_id: user.id, username},
+            {
+                userId: user.id, 
+                userEmail: email
+            },
             process.env.TOKEN_KEY!,
             {expiresIn: "1h"}
         );

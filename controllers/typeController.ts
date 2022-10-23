@@ -8,6 +8,8 @@ import { TypeService } from '../services/typeService';
  *  get:
  *      summary: Return all types
  *      tags: [Types]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: list of all types
@@ -31,6 +33,8 @@ router.get('/', async (req, res) => {
  *  get:
  *      summary: Return type by id
  *      tags: [Types]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -68,6 +72,8 @@ router.get('/:id', async (req, res) => {
  *  post:
  *      summary: Create a new type
  *      tags: [Types]
+ *      security:
+ *          - bearerAuth: []
  *      requestBody:
  *          required: true
  *          content: 
@@ -107,6 +113,8 @@ router.post('/', async (req, res) => {
  *  put:
  *      summary: Updates type by id
  *      tags: [Types]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -151,6 +159,8 @@ router.put('/:id', async (req, res) => {
  *  delete:
  *      summary: Deletes a type by id
  *      tags: [Types]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id

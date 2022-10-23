@@ -8,6 +8,8 @@ const router = express.Router();
  *  get:
  *      summary: Return all categories
  *      tags: [Categories]
+ *      security:
+ *          - bearerAuth: []
  *      responses:
  *          200:
  *              description: list of all categories
@@ -31,6 +33,8 @@ router.get('/', async (req, res) => {
  *  get:
  *      summary: Return Categories by workspaceId v
  *      tags: [Categories]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: workspaceId
@@ -79,6 +83,8 @@ router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;}
  *  post:
  *      summary: Create a new category
  *      tags: [Categories]
+ *      security:
+ *          - bearerAuth: []
  *      requestBody:
  *          required: true
  *          content: 
@@ -120,6 +126,8 @@ router.post('/', async (req, res) => {
  *  get:
  *      summary: Return post by id
  *      tags: [Categories]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
@@ -177,6 +185,8 @@ router.get('/:id', async (req, res) => {
  *  delete:
  *      summary: Deletes a category by id
  *      tags: [Categories]
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          -   in: path
  *              name: id
