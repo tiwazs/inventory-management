@@ -49,8 +49,8 @@ model IAM {
   id          String    @id @default(cuid())
   Workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId String
-  username    String
   password    String
+  tagname     String
   role        Role      @default(USER)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
