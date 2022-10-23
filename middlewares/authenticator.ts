@@ -2,8 +2,11 @@ import jwt from "jsonwebtoken";
 import logger from '../lib/logger';
 import { Request, Response } from "express";
 
+interface RequestWithUser extends Request {
+    user?: any;
+}
 
-const authenticator = (req:Request, res:Response, next: () => any) => {
+const authenticator = (req:RequestWithUser, res:Response, next: () => any) => {
     const tokenBearer = req.body.token || req.query.token || req.headers["x-access-token"] || req.headers["authorization"];
     logger.debug( `AUTH MIDDLEWARE: token received: ${tokenBearer}` );
 
@@ -17,7 +20,7 @@ const authenticator = (req:Request, res:Response, next: () => any) => {
         const decoded = jwt.verify(token, process.env.TOKEN_KEY!);
         
         logger.debug( `AUTH MIDDLEWARE: token validated` );
-        req.body.userDecoded = decoded;
+        req.user = decoded;
         return next();
     } catch (e) {
 
