@@ -50,7 +50,7 @@ model IAM {
   Workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId String
   password    String
-  tagname     String
+  tagname     String?
   role        Role      @default(USER)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
