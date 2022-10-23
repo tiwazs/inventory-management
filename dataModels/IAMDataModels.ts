@@ -20,7 +20,7 @@ export interface UserDM extends IAMBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      user:
+ *      iam:
  *          type: object
  *          required:
  *              - workspaceId
@@ -54,7 +54,7 @@ export interface UserDM extends IAMBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      userToUpdate:
+ *      iamToUpdate:
  *          type: object
  *          properties:
  *              password:
@@ -72,7 +72,7 @@ export interface UserDM extends IAMBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      userToCreate:
+ *      iamToCreate:
  *          type: object
  *          required:
  *              - workspaceId
