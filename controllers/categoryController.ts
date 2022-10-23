@@ -1,4 +1,5 @@
 import express, {Request } from 'express';
+import logger from '../lib/logger';
 import { CategoryService } from '../services/categoryService';
 const router = express.Router();
 
@@ -72,8 +73,9 @@ router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;}
         if (Array.isArray(categories) && categories.length) return res.status(200).json(categories);
         
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -115,8 +117,9 @@ router.post('/', async (req, res) => {
         }else{
             return res.status(400).json({message: "Invalid data"});
         }
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -155,8 +158,9 @@ router.get('/:id', async (req, res) => {
         if (category) return res.status(200).json(category);
                 
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -214,8 +218,9 @@ router.delete('/:id', async (req, res) => {
         if(category) return res.status(200).json(category);
         
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 

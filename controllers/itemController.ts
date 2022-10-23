@@ -1,4 +1,5 @@
 import express, { Request } from 'express';
+import logger from '../lib/logger';
 const router = express.Router();
 import { ItemService } from '../services/itemService';
 
@@ -87,8 +88,9 @@ router.get('/workspace/:workspaceId', async (req: Request<{workspaceId: string;}
         if(Array.isArray(items) && items.length) return res.status(200).json(items);
 
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).send(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -127,8 +129,9 @@ router.get('/category/:categoryId', async (req, res) => {
         if(Array.isArray(items) && items.length) return res.status(200).json(items);
 
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).send(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -166,8 +169,9 @@ router.get('/location/:locationId', async (req,res) => {
         if(Array.isArray(items) && items.length) return res.status(200).json(items);
 
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).send(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -208,8 +212,9 @@ router.get('/:id', async (req, res) => {
         if(item) return res.status(200).json(item);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -252,8 +257,9 @@ router.post('/', async (req, res) => {
             return res.status(200).json(item);
         }
         return res.status(400).json({message: "Invalid data"});
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -298,8 +304,9 @@ router.put('/:id', async (req, res) => {
         if(item) return res.status(200).json(item);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -337,8 +344,9 @@ router.delete('/:id', async (req, res) => {
         if(item) return res.status(200).json(item);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 

@@ -1,4 +1,5 @@
 import express from "express";
+import logger from "../lib/logger";
 import { WorkspaceService } from "../services/workspaceService";
 const router = express.Router();
 
@@ -61,8 +62,9 @@ router.get("/:id", async (req, res) => {
         if(workspace) return res.status(200).json(workspace);
 
         return res.status(404).send();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -103,8 +105,9 @@ router.post("/", async (req, res) => {
             return res.status(200).json(workspace);
         }
         return res.status(400).json({ message: "Invalid request" });
-    } catch (error) {
-        return res.status(500).json(error);
+    } catch (error: any) {
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -149,8 +152,9 @@ router.put("/:id", async (req, res) => {
         if(workspace) return res.status(200).json(workspace);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -188,8 +192,9 @@ router.delete("/:id", async (req, res) => {
         if(workspace) return res.status(200).json(workspace);
         
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 

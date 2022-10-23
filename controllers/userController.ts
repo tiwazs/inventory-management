@@ -1,4 +1,5 @@
 import express from 'express';
+import logger from '../lib/logger';
 const router = express.Router();
 import { UserService } from '../services/userService';
 
@@ -61,8 +62,9 @@ router.get('/:id', async (req, res) => {
         if(user) return res.status(200).json(user);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -100,8 +102,9 @@ router.get('/email/:email', async (req, res) => {
         if(user) return res.status(200).json(user);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -146,8 +149,9 @@ router.put('/:id', async (req, res) => {
         if(user) return res.status(200).json(user);
         
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -185,8 +189,9 @@ router.delete('/:id', async (req, res) => {
         if(user) return res.status(200).json(user);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 

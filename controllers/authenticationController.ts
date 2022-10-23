@@ -1,4 +1,5 @@
 import express from 'express';
+import logger from '../lib/logger';
 const router = express.Router();
 import { AuthenticationService } from '../services/authenticationService';
 
@@ -39,6 +40,7 @@ import { AuthenticationService } from '../services/authenticationService';
         }
         return res.status(400).json({error: "Invalid request"});
     }catch(error: any){
+        logger.error(error.message);
         return res.status(500).json({error: error.message});
     }
 });
@@ -79,6 +81,7 @@ import { AuthenticationService } from '../services/authenticationService';
         }
         return res.status(400).json({error: "Invalid request"});
     }catch(error: any){
+        logger.error(error.message);
         if(error.message === "User not found") return res.status(404).json({error: error.message});
         if(error.message === "Invalid Credentials"
             || error.message === "Username and password are required") return res.status(401).json({error: error.message});

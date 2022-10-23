@@ -1,4 +1,5 @@
 import express from 'express';
+import logger from '../lib/logger';
 const router = express.Router();
 import { LocationService } from '../services/locationService';
 
@@ -64,8 +65,9 @@ router.post('/', async (req, res) => {
             return res.status(200).json(location);
         }
         return res.status(400).json({message: "Invalid body"});
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -105,8 +107,9 @@ router.get('/:id', async (req, res) => {
         if(location) return res.status(200).json(location);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -146,8 +149,9 @@ router.get('/workspace/:workspaceId', async (req, res) => {
         if(Array.isArray(locations) && locations.length) return res.status(200).json(locations);
 
         return res.status(404).json();
-    }catch{
-        return res.status(500).json();
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -192,8 +196,9 @@ router.put('/:id', async (req, res) => {
         if(location) return res.status(200).json(location);
 
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -231,8 +236,9 @@ router.delete('/:id', async (req, res) => {
         if(location) return res.status(200).json(location);
         
         return res.status(404).json();
-    }catch(error){
-        return res.status(500).json(error);
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
     }
 });
 
