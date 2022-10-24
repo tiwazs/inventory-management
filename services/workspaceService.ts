@@ -9,6 +9,15 @@ export class WorkspaceService {
         return workspaces;
     }
 
+    static async getByUserId(userId: string): Promise<Workspace[]> {
+        const workspaces = await prisma.workspace.findMany({
+            where: {
+                userId: userId
+            }
+        });
+        return workspaces;
+    }
+
     static async getById(id: string): Promise<WorkspaceDM | null> {
         const workspace = await prisma.workspace.findUnique({
             where: {

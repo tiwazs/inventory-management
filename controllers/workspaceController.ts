@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/workspace:
+ * /api/workspace/getAll/{all}:
  *  get:
  *      summary: Return all workspaces
  *      tags: [Workspaces]
@@ -24,7 +24,7 @@ const router = express.Router();
  *                                
  */
 
-router.get("/", async (req, res) => {
+router.get("/getAll/:all", async (req, res) => {
     const workspaces = await WorkspaceService.getAll();
     return res.status(200).json(workspaces);   
 });
@@ -70,6 +70,46 @@ router.get("/:id", async (req: RequestWithUser, res) => {
     }catch(error: any){
         logger.error(error.message);
         if(error.message === "Forbidden: User has no permission to access this workspace") 
+            return res.status(403).json({error: error.message});
+        
+        return res.status(500).json({error: error.message});
+    }
+});
+
+/**
+ * @swagger
+ * /api/workspace:
+ *  get:
+ *      summary: Return All Workspaces for a User
+ *      tags: [Workspaces]
+ *      security:
+ *          - bearerAuth: []
+ *      responses:
+ *          200:
+ *              description: Type
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/workspace'
+ *          404:
+ *              description: Type not found
+ *                                                               
+ */
+
+router.get('/', async (req: RequestWithUser, res) => {  
+    try{
+        const { user } = req;
+
+        if(user.userId === undefined) 
+            throw new Error("Forbidden: User has no permissions");
+
+        const workspaces = await WorkspaceService.getByUserId(user.userId);
+        if(workspaces) return res.status(200).json(workspaces);
+
+        return res.status(404).send();
+    }catch(error: any){
+        logger.error(error.message);
+        if(error.message === "Forbidden: User has no permissions") 
             return res.status(403).json({error: error.message});
         
         return res.status(500).json({error: error.message});
