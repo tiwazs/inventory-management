@@ -54,6 +54,7 @@ app.use('/api/auth', require('./controllers/authenticationController'));
 app.use('/api/user', authenticator, require('./controllers/userController'));
 app.use('/api/type', authenticator, require('./controllers/typeController'));
 app.use('/api/workspace', authenticator, require('./controllers/workspaceController'));
+app.use('/api/iam', authenticator, require('./controllers/iamController'));
 app.use('/api/category', authenticator, require('./controllers/categoryController'));
 app.use('/api/location', authenticator, require('./controllers/locationController'));
 app.use('/api/item', authenticator, require('./controllers/itemController'));
