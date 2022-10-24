@@ -1,31 +1,27 @@
 import jwt from "jsonwebtoken";
 import logger from '../lib/logger';
-import { Request, Response } from "express";
-
-interface RequestWithUser extends Request {
-    user?: any;
-}
+import { Response } from "express";
+import { RequestWithUser } from "../dataModels/AuthenticationModels";
 
 const authenticator = (req:RequestWithUser, res:Response, next: () => any) => {
     const tokenBearer = req.body.token || req.query.token || req.headers["x-access-token"] || req.headers["authorization"];
-    logger.debug( `AUTH MIDDLEWARE: token received: ${tokenBearer}` );
 
     if(!tokenBearer) {
-        logger.debug( `AUTH MIDDLEWARE: no token found` );
-        return res.status(403).send({error: "A token is required for authentication"});
+        logger.info( `authenticator: no token found` );
+        return res.status(401).send({error: "A token is required for authentication"});
     }
     try {
         const token = tokenBearer.split("Bearer ")[1];
-        logger.debug( `AUTH MIDDLEWARE: Verifying token: ${token}` );
+        logger.debug( `authenticator: Verifying token: ${token}` );
         const decoded = jwt.verify(token, process.env.TOKEN_KEY!);
         
-        logger.debug( `AUTH MIDDLEWARE: token validated` );
+        logger.info( `authenticator: token validated` );
         req.user = decoded;
         return next();
-    } catch (e) {
+    } catch ( error:any ) {
 
-        logger.debug( `AUTH MIDDLEWARE: Invalid token` );
-        return res.status(401).send({error: "Invalid Token"});
+        logger.error({error: error.message});
+        return res.status(401).send({error: error.message});
     }
 }
 
