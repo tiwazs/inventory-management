@@ -1,6 +1,7 @@
 import prisma from '../configurations/dbinit';
 import { Workspace } from "@prisma/client";
 import { WorkspaceBaseDM, WorkspaceDM } from "../dataModels/WorkspaceDataModel";
+import logger from '../lib/logger';
 
 export class WorkspaceService {
     static async getAll(): Promise<Workspace[]> {
@@ -54,5 +55,19 @@ export class WorkspaceService {
             }
         });
         return workspaceDeleted;
+    }
+
+    static async isOwner(userId: string, workspaceId: string): Promise<boolean> {
+        const workspace = await prisma.workspace.findFirst({
+            where: {
+                id: workspaceId,
+                userId: userId
+            }
+        });
+
+        const isOwner = (workspace!==null) ? true : false;
+        logger.debug(`WorkspaceService.isOwner: ${isOwner}`);
+        
+        return isOwner;
     }
 }
