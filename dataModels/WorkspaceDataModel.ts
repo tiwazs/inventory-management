@@ -47,9 +47,6 @@ export interface WorkspaceDM extends WorkspaceBaseDM {
  *      workspaceToUpdate:
  *          type: object
  *          properties:
- *              userId:
- *                  type: string
- *                  description: userId
  *              name:
  *                  type: string
  *                  description: Workspace name
@@ -65,9 +62,6 @@ export interface WorkspaceDM extends WorkspaceBaseDM {
  *              - userId
  *              - name
  *          properties:
- *              userId:
- *                  type: string
- *                  description: userId
  *              name:
  *                  type: string
  *                  description: Workspace name
