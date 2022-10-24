@@ -1,4 +1,5 @@
 import express from 'express';
+import { Request } from 'express';
 const router = express.Router();
 
 /**************************************************|Auth Data Models|**********************************************/
@@ -15,6 +16,10 @@ export interface UserRegisterDM {
 export interface LoginDM {
     email: string;
     password: string;
+}
+
+export interface RequestWithUser extends Request {
+    user?: any;
 }
 
 /**
