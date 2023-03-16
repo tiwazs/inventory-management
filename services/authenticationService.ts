@@ -1,8 +1,8 @@
-import { User } from "@prisma/client";
-import { UserBaseDM } from "../dataModels/UserDataModel";
+import { CompanyAccount } from "@prisma/client";
+import { CompanyAccountBaseDM } from "../dataModels/CompanyAccountDataModel";
 import { Encryptor } from "../lib/encryptor";
 import prisma from '../configurations/dbinit';
-import { UserService } from "./userService";
+import { CompanyAccountService } from "./companyAccountService";
 import jwt from "jsonwebtoken";
 import logger from "../lib/logger";
 
@@ -11,7 +11,7 @@ export class AuthenticationService {
     static async login(email: string, password: string) {
         if(!email || !password) { throw new Error("Username and password are required"); }
 
-        const user = await UserService.getEmail(email);
+        const user = await CompanyAccountService.getEmail(email);
         if (!user) { throw new Error("User not found");}
         
         // Matching password
@@ -36,15 +36,15 @@ export class AuthenticationService {
         return userJson;
     }
 
-    static async register(user: UserBaseDM): Promise<User> {
-        const encryptPassword:string = await Encryptor.encryptPassword(user.password);
+    static async register(companyAccount: CompanyAccountBaseDM): Promise<CompanyAccount> {
+        const encryptPassword:string = await Encryptor.encryptPassword(companyAccount.password);
 
         // Ecrpt the password
-        user.password = encryptPassword;
+        companyAccount.password = encryptPassword;
 
-        const userCreated = await prisma.user.create({
+        const userCreated = await prisma.companyAccount.create({
             data: {
-                ...user
+                ...companyAccount
             }
         });
 

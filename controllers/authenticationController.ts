@@ -7,21 +7,21 @@ import { AuthenticationService } from '../services/authenticationService';
  * @swagger
  * /api/auth/register:
  *  post:
- *      summary: Create a new user
+ *      summary: Create a new companyAccount
  *      tags: [Authentication]
  *      requestBody:
  *          required: true
  *          content: 
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/userToCreate'
+ *                      $ref: '#/components/schemas/companyAccountToCreate'
  *      responses:
  *          200:
- *              description: User created
+ *              description: companyAccount created
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
  *              description: Object not found
  *                                
@@ -35,8 +35,8 @@ import { AuthenticationService } from '../services/authenticationService';
             "email" in body && typeof body.email === "string" &&
             "password" in body && typeof body.password === "string"
         ){
-            const user = await AuthenticationService.register(body);
-            return res.status(200).json(user);
+            const companyAccount = await AuthenticationService.register(body);
+            return res.status(200).json(companyAccount);
         }
         return res.status(400).json({error: "Invalid request"});
     }catch(error: any){
@@ -49,7 +49,7 @@ import { AuthenticationService } from '../services/authenticationService';
  * @swagger
  * /api/auth/login:
  *  post:
- *      summary: Login user
+ *      summary: Login companyAccount
  *      tags: [Authentication]
  *      requestBody:
  *          required: true
@@ -59,11 +59,11 @@ import { AuthenticationService } from '../services/authenticationService';
  *                      $ref: '#/components/schemas/login'
  *      responses:
  *          200:
- *              description: User created
+ *              description: companyAccount created
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
  *              description: Object not found
  *                                
@@ -76,13 +76,13 @@ import { AuthenticationService } from '../services/authenticationService';
             "email" in body && typeof body.email === "string" &&
             "password" in body && typeof body.password === "string"
         ){
-            const user = await AuthenticationService.login(body.email, body.password);
-            return res.status(200).json(user);
+            const companyAccount = await AuthenticationService.login(body.email, body.password);
+            return res.status(200).json(companyAccount);
         }
         return res.status(400).json({error: "Invalid request"});
     }catch(error: any){
         logger.error(error.message);
-        if(error.message === "User not found") return res.status(404).json({error: error.message});
+        if(error.message === "Company Account not found") return res.status(404).json({error: error.message});
         if(error.message === "Invalid Credentials"
             || error.message === "Username and password are required") return res.status(401).json({error: error.message});
 

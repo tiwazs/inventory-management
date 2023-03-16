@@ -2,39 +2,39 @@ import express from 'express';
 import { RequestWithUser } from '../dataModels/AuthenticationModels';
 import logger from '../lib/logger';
 const router = express.Router();
-import { UserService } from '../services/userService';
+import { CompanyAccountService } from '../services/companyAccountService';
 
 /**
  * @swagger
- * /api/user/getall/{all}:
+ * /api/companyAccount/getall/{all}:
  *  get:
- *      summary: Return all users
- *      tags: [Users]
+ *      summary: Return all companyAccounts
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      responses:
  *          200:
- *              description: list of all users
+ *              description: list of all companyAccounts
  *              content:
  *                  application/json:
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/user'
+ *                              $ref: '#/components/schemas/companyAccounts'
  *                                
  */
 
 router.get('/getall/:getall', async (req, res) => {
-    const users = await UserService.getAll();
-    return res.status(200).json(users);
+    const companyAccounts = await CompanyAccountService.getAll();
+    return res.status(200).json(companyAccounts);
 });
 
 /**
  * @swagger
- * /api/user/id/{id}:
+ * /api/companyAccount/id/{id}:
  *  get:
- *      summary: Return user by id
- *      tags: [Users]
+ *      summary: Return companyAccount by id
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      parameters:
@@ -43,24 +43,24 @@ router.get('/getall/:getall', async (req, res) => {
  *              schema:
  *                  type: string
  *              required: true
- *              description: user id
+ *              description: companyAccount id
  *      responses:
  *          200:
- *              description: User
+ *              description: companyAccount
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccounts'
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                                               
  */
 
 router.get('/id/:id', async (req, res) => {
     const { id } = req.params;
     try{
-        const user = await UserService.getById(id);
-        if(user) return res.status(200).json(user);
+        const companyAccount = await CompanyAccountService.getById(id);
+        if(companyAccount) return res.status(200).json(companyAccount);
 
         return res.status(404).json();
     }catch(error: any){
@@ -71,10 +71,10 @@ router.get('/id/:id', async (req, res) => {
 
 /**
  * @swagger
- * /api/user/email/{email}:
+ * /api/companyAccount/email/{email}:
  *  get:
- *      summary: Return user by email
- *      tags: [Users]
+ *      summary: Return companyAccount by email
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      parameters:
@@ -83,24 +83,24 @@ router.get('/id/:id', async (req, res) => {
  *              schema:
  *                  type: string
  *              required: true
- *              description: user email
+ *              description: companyAccount email
  *      responses:
  *          200:
- *              description: User
+ *              description: companyAccount
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                                               
  */
 
 router.get('/email/:email', async (req, res) => {
     const { email } = req.params;
     try{
-        const user = await UserService.getEmail(email);
-        if(user) return res.status(200).json(user);
+        const companyAccount = await CompanyAccountService.getEmail(email);
+        if(companyAccount) return res.status(200).json(companyAccount);
 
         return res.status(404).json();
     }catch(error: any){
@@ -111,29 +111,29 @@ router.get('/email/:email', async (req, res) => {
 
 /**
  * @swagger
- * /api/user:
+ * /api/companyAccount:
  *  get:
- *      summary: Return user info
- *      tags: [Users]
+ *      summary: Return companyAccount info
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      responses:
  *          200:
- *              description: User
+ *              description: companyAccount
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                                               
  */
 
  router.get('/', async (req: RequestWithUser, res) => {
-    const { user } = req;
+    const { companyAccount } = req;
     try{
-        const userRead = await UserService.getById(user.userId);
-        if(userRead) return res.status(200).json(userRead);
+        const companyAccountRead = await CompanyAccountService.getById(companyAccount.userId);
+        if(companyAccountRead) return res.status(200).json(companyAccountRead);
 
         return res.status(404).json();
     }catch(error: any){
@@ -144,10 +144,10 @@ router.get('/email/:email', async (req, res) => {
 
 /**
  * @swagger
- * /api/user/id/{id}:
+ * /api/companyAccount/id/{id}:
  *  put:
- *      summary: Updates user
- *      tags: [Users]
+ *      summary: Updates companyAccount
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      parameters:
@@ -156,22 +156,22 @@ router.get('/email/:email', async (req, res) => {
  *              schema:
  *                  type: string
  *              required: true
- *              description: user id
+ *              description: companyAccount id
  *      requestBody:
  *          required: true
  *          content: 
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/userToUpdate'
+ *                      $ref: '#/components/schemas/companyAccountToUpdate'
  *      responses:
  *          200:
  *              description: If operation was succesful
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                
  */
 
@@ -179,8 +179,8 @@ router.put('/id/:id', async (req, res) => {
     const { id } = req.params;
     const { body } = req;
     try{
-        const user = await UserService.update(id, body);
-        if(user) return res.status(200).json(user);
+        const companyAccount = await CompanyAccountService.update(id, body);
+        if(companyAccount) return res.status(200).json(companyAccount);
         
         return res.status(404).json();
     }catch(error: any){
@@ -191,10 +191,10 @@ router.put('/id/:id', async (req, res) => {
 
 /**
  * @swagger
- * /api/user:
+ * /api/companyAccount:
  *  put:
- *      summary: Updates user
- *      tags: [Users]
+ *      summary: Updates companyAccount
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      requestBody:
@@ -202,25 +202,25 @@ router.put('/id/:id', async (req, res) => {
  *          content: 
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/userToUpdate'
+ *                      $ref: '#/components/schemas/companyAccountToUpdate'
  *      responses:
  *          200:
  *              description: If operation was succesful
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/user'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                
  */
 
  router.put('/', async (req: RequestWithUser, res) => {
     const { body } = req;
-    const { user } = req;
+    const { companyAccount } = req;
     try{
-        const userUdated = await UserService.update(user.userId, body);
-        if(userUdated) return res.status(200).json(userUdated);
+        const companyAccountUdated = await CompanyAccountService.update(companyAccount.userId, body);
+        if(companyAccountUdated) return res.status(200).json(companyAccountUdated);
         
         return res.status(404).json();
     }catch(error: any){
@@ -231,10 +231,10 @@ router.put('/id/:id', async (req, res) => {
 
 /**
  * @swagger
- * /api/user/id/{id}:
+ * /api/companyAccount/id/{id}:
  *  delete:
- *      summary: Deletes a user by id
- *      tags: [Users]
+ *      summary: Deletes a companyAccount by id
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      parameters:
@@ -243,7 +243,7 @@ router.put('/id/:id', async (req, res) => {
  *              schema:
  *                  type: string
  *              required: true
- *              description: user id
+ *              description: companyAccount id
  *      responses:
  *          200:
  *              description: If operation was succesful
@@ -252,15 +252,15 @@ router.put('/id/:id', async (req, res) => {
  *                      schema:
  *                          type: string
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                
  */
 
 router.delete('/id/:id', async (req, res) => {
     const { id } = req.params;
     try{
-        const user = await UserService.delete(id);
-        if(user) return res.status(200).json(user);
+        const companyAccount = await CompanyAccountService.delete(id);
+        if(companyAccount) return res.status(200).json(companyAccount);
 
         return res.status(404).json();
     }catch(error: any){
@@ -271,10 +271,10 @@ router.delete('/id/:id', async (req, res) => {
 
 /**
  * @swagger
- * /api/user:
+ * /api/companyAccount:
  *  delete:
- *      summary: Deletes a user by id
- *      tags: [Users]
+ *      summary: Deletes a companyAccount by id
+ *      tags: [CompanyAccounts]
  *      security:
  *          - bearerAuth: []
  *      responses:
@@ -285,15 +285,15 @@ router.delete('/id/:id', async (req, res) => {
  *                      schema:
  *                          type: string
  *          404:
- *              description: User not found
+ *              description: companyAccount not found
  *                                
  */
 
  router.delete('/', async (req: RequestWithUser, res) => {
-    const { user } = req;
+    const { companyAccount } = req;
     try{
-        const userDeleted = await UserService.delete(user.userId);
-        if(userDeleted) return res.status(200).json(userDeleted);
+        const companyAccountDeleted = await CompanyAccountService.delete(companyAccount.userId);
+        if(companyAccountDeleted) return res.status(200).json(companyAccountDeleted);
 
         return res.status(404).json();
     }catch(error: any){

@@ -16,7 +16,7 @@ const authenticator = (req:RequestWithUser, res:Response, next: () => any) => {
         const decoded = jwt.verify(token, process.env.TOKEN_KEY!);
         
         logger.info( `authenticator: token validated` );
-        req.user = decoded;
+        req.companyAccount = decoded;
         return next();
     } catch ( error:any ) {
 
