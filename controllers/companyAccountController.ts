@@ -20,7 +20,7 @@ import { CompanyAccountService } from '../services/companyAccountService';
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/companyAccounts'
+ *                              $ref: '#/components/schemas/companyAccount'
  *                                
  */
 
@@ -50,7 +50,7 @@ router.get('/getall/:getall', async (req, res) => {
  *              content:
  *                  application/json:
  *                      schema:
- *                          $ref: '#/components/schemas/companyAccounts'
+ *                          $ref: '#/components/schemas/companyAccount'
  *          404:
  *              description: companyAccount not found
  *                                                               
