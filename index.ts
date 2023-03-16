@@ -51,7 +51,7 @@ app.use(customMorgan);
 
 // API
 app.use('/api/auth', require('./controllers/authenticationController'));
-app.use('/api/user', authenticator, require('./controllers/userController'));
+app.use('/api/companyAccount', authenticator, require('./controllers/companyAccountController'));
 app.use('/api/type', authenticator, require('./controllers/typeController'));
 app.use('/api/workspace', authenticator, require('./controllers/workspaceController'));
 app.use('/api/iam', authenticator, require('./controllers/iamController'));
