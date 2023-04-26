@@ -71,6 +71,86 @@ router.get('/id/:id', async (req, res) => {
 
 /**
  * @swagger
+ * /api/companyAccount/genapikey/{id}:
+ *  get:
+ *      summary: Generate api key for user
+ *      tags: [CompanyAccounts]
+ *      security:
+ *          - bearerAuth: []
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: CompanyAccount id
+ *      responses:
+ *          200:
+ *              description: companyAccount
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/companyAccount'
+ *          404:
+ *              description: companyAccount not found
+ *                                                               
+ */
+
+router.get('/genapikey/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
+        const CompanyAccount = await CompanyAccountService.genertateApiKey(id);
+        if(CompanyAccount) return res.status(200).json(CompanyAccount);
+
+        return res.status(404).json();
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
+    }
+});
+
+/**
+ * @swagger
+ * /api/companyAccount/apikey/{id}:
+ *  get:
+ *      summary: Get CompanyAccount by api key
+ *      tags: [CompanyAccounts]
+ *      security:
+ *          - bearerAuth: []
+ *      parameters:
+ *          -   in: path
+ *              name: id
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: CompanyAccount id
+ *      responses:
+ *          200:
+ *              description: CompanyAccount
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/companyAccount'
+ *          404:
+ *              description: CompanyAccount not found
+ *                                                               
+ */
+
+router.get('/apikey/:apikey', async (req, res) => {
+    const { apikey } = req.params;
+    try{
+        const companyAccount = await CompanyAccountService.getByApiKey(apikey);
+        if(companyAccount) return res.status(200).json(companyAccount);
+
+        return res.status(404).json();
+    }catch(error: any){
+        logger.error(error.message);
+        return res.status(500).json({error: error.message});
+    }
+});
+
+/**
+ * @swagger
  * /api/companyAccount/email/{email}:
  *  get:
  *      summary: Return companyAccount by email

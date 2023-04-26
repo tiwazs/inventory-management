@@ -14,6 +14,7 @@ const authenticatorAPI = async (req:RequestWithUser, res:Response, next: () => a
     try {
         const token = tokenBearer.split("Bearer ")[1];
         const decoded = await CompanyAccountService.getByApiKey(token);
+        if(!decoded) throw new Error("Invalid token");
         
         logger.info( `authenticator: token validated` );
         req.companyAccount = decoded;

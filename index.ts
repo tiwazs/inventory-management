@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import customMorgan from './middlewares/customMorgan';
 import authenticator from './middlewares/authenticator';
+import authenticatorAPI from './middlewares/authenticatorAPI';
 
 
 /************************************************************************************************
@@ -52,12 +53,12 @@ app.use(customMorgan);
 // API
 app.use('/api/auth', require('./controllers/authenticationController'));
 app.use('/api/companyAccount', authenticator, require('./controllers/companyAccountController'));
-app.use('/api/type', authenticator, require('./controllers/typeController'));
-app.use('/api/workspace', authenticator, require('./controllers/workspaceController'));
-app.use('/api/iam', authenticator, require('./controllers/iamController'));
-app.use('/api/category', authenticator, require('./controllers/categoryController'));
-app.use('/api/location', authenticator, require('./controllers/locationController'));
-app.use('/api/item', authenticator, require('./controllers/itemController'));
+app.use('/api/type', authenticatorAPI, require('./controllers/typeController'));
+app.use('/api/workspace', authenticatorAPI, require('./controllers/workspaceController'));
+app.use('/api/iam', authenticatorAPI, require('./controllers/iamController'));
+app.use('/api/category', authenticatorAPI, require('./controllers/categoryController'));
+app.use('/api/location', authenticatorAPI, require('./controllers/locationController'));
+app.use('/api/item', authenticatorAPI, require('./controllers/itemController'));
 
 
 app.listen(app.get('PORT'), () => {

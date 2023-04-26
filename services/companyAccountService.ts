@@ -1,6 +1,7 @@
 import { CompanyAccount } from '@prisma/client';
 import prisma from '../configurations/dbinit';
 import { CompanyAccountBaseDM } from '../dataModels/CompanyAccountDataModel';
+import crypto from 'crypto';
 
 export class CompanyAccountService {
     static async getAll(): Promise<CompanyAccount[]> {
