@@ -18,6 +18,29 @@ export class CompanyAccountService {
         return companyAccount;
     }
 
+    static async genertateApiKey(id: string): Promise<CompanyAccount | null> {
+        const companyAccount = await prisma.companyAccount.update({
+            where: {
+                id: id
+            },
+            data: {
+                apiKey: crypto.randomUUID()
+            }
+        });
+
+        return companyAccount;
+    }
+
+    static async getByApiKey(apiKey: string): Promise<CompanyAccount | null> {
+        const companyAccount = await prisma.companyAccount.findFirst({
+            where: {
+                apiKey: apiKey
+            }
+        });
+
+        return companyAccount;
+    }
+
     static async getEmail(email: string): Promise<CompanyAccount | null> {
         const companyAccount = await prisma.companyAccount.findFirst({
             where: {
