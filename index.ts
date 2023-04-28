@@ -16,7 +16,7 @@ const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'Inventory Management System API',
-      version: '1.2.1',
+      version: '1.3.0',
       description: 'A simple Inventory Management System API'
     },
     servers: [
@@ -52,7 +52,7 @@ app.use(customMorgan);
 
 // API
 app.use('/api/auth', require('./controllers/authenticationController'));
-app.use('/api/companyAccount', authenticator, require('./controllers/companyAccountController'));
+app.use('/api/user', authenticator, require('./controllers/userController'));
 app.use('/api/type', authenticatorAPI, require('./controllers/typeController'));
 app.use('/api/workspace', authenticatorAPI, require('./controllers/workspaceController'));
 app.use('/api/iam', authenticatorAPI, require('./controllers/iamController'));

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import logger from '../lib/logger';
 import { Response } from "express";
 import { RequestWithUser } from "../dataModels/AuthenticationModels";
-import { CompanyAccountService } from "../services/companyAccountService";
+import { UserService } from "../services/userService";
 
 const authenticatorAPI = async (req:RequestWithUser, res:Response, next: () => any) => {
     const tokenBearer = req.body.token || req.query.token || req.headers["x-access-token"] || req.headers["authorization"];
@@ -13,11 +13,11 @@ const authenticatorAPI = async (req:RequestWithUser, res:Response, next: () => a
     }
     try {
         const token = tokenBearer.split("Bearer ")[1];
-        const decoded = await CompanyAccountService.getByApiKey(token);
+        const decoded = await UserService.getByApiKey(token);
         if(!decoded) throw new Error("Invalid token");
         
         logger.info( `authenticator: token validated` );
-        req.companyAccount = decoded;
+        req.user = decoded;
         return next();
     } catch ( error:any ) {
 

@@ -19,7 +19,7 @@ export interface LoginDM {
 }
 
 export interface RequestWithUser extends Request {
-    companyAccount?: any;
+    user?: any;
 }
 
 /**

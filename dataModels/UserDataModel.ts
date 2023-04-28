@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 /**************************************************|User Data Models|**********************************************/
-export interface CompanyAccountBaseDM {
+export interface UserBaseDM {
     name: string | null | undefined;
     email: string;
     password: string;
@@ -13,7 +13,7 @@ export interface CompanyAccountBaseDM {
     apiKey: string | null | undefined;
 }
 
-export interface CompanyAccountDM extends CompanyAccountBaseDM {
+export interface UserDM extends UserBaseDM {
     id: string;
     createdAt: Date;
     updatedAt: Date;
@@ -23,7 +23,7 @@ export interface CompanyAccountDM extends CompanyAccountBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      companyAccount:
+ *      user:
  *          type: object
  *          required:
  *              - name
@@ -69,7 +69,7 @@ export interface CompanyAccountDM extends CompanyAccountBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      companyAccountToUpdate:
+ *      userToUpdate:
  *          type: object
  *          properties:
  *              name:
@@ -96,7 +96,7 @@ export interface CompanyAccountDM extends CompanyAccountBaseDM {
  * @swagger
  * components:
  *  schemas:
- *      companyAccountToCreate:
+ *      userToCreate:
  *          type: object
  *          required:
  *              - name

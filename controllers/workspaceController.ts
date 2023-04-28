@@ -59,8 +59,8 @@ router.get("/getAll/:all", async (req, res) => {
 router.get("/:id", async (req: RequestWithUser, res) => {
     try{
         const { id } = req.params;
-        const { companyAccount } = req;
-        if(!(await WorkspaceService.isOwner(companyAccount.userId, id))) 
+        const { user } = req;
+        if(!(await WorkspaceService.isOwner(user.userId, id))) 
             throw new Error("Forbidden: Company Account has no permission to access this workspace");
 
         const workspace = await WorkspaceService.getById(id);
@@ -98,12 +98,12 @@ router.get("/:id", async (req: RequestWithUser, res) => {
 
 router.get('/', async (req: RequestWithUser, res) => {  
     try{
-        const { companyAccount } = req;
+        const { user } = req;
 
-        if(companyAccount.userId === undefined) 
+        if(user.userId === undefined) 
             throw new Error("Forbidden: Company Account has no permissions");
 
-        const workspaces = await WorkspaceService.getByUserId(companyAccount.userId);
+        const workspaces = await WorkspaceService.getByUserId(user.userId);
         if(workspaces) return res.status(200).json(workspaces);
 
         return res.status(404).send();
@@ -144,15 +144,15 @@ router.get('/', async (req: RequestWithUser, res) => {
 
 router.post("/", async (req: RequestWithUser, res) => {
     const { body } = req;
-    const { companyAccount } = req;
+    const { user } = req;
     try {
         if (
             "name" in body && typeof body.name === "string"
         ) {
-            if(companyAccount.userId === undefined) 
+            if(user.userId === undefined) 
                 throw new Error("Forbidden: Company Account has no permission to create a workspace");
 
-            body.userId = companyAccount.userId;
+            body.userId = user.userId;
 
             const workspace = await WorkspaceService.create(body);
             return res.status(200).json(workspace);
@@ -202,9 +202,9 @@ router.post("/", async (req: RequestWithUser, res) => {
 router.put("/:id", async (req: RequestWithUser, res) => {
     const { id } = req.params;
     const { body } = req;
-    const { companyAccount } = req;
+    const { user } = req;
     try {
-        if(!(await WorkspaceService.isOwner(companyAccount.userId, id))) 
+        if(!(await WorkspaceService.isOwner(user.userId, id))) 
             throw new Error("Forbidden: Company Account has no permission over this workspace");
 
         const workspace = await WorkspaceService.update(id, body);
@@ -248,9 +248,9 @@ router.put("/:id", async (req: RequestWithUser, res) => {
 
 router.delete("/:id", async (req: RequestWithUser, res) => {
     const { id } = req.params;
-    const { companyAccount } = req;
+    const { user } = req;
     try{
-        if(!(await WorkspaceService.isOwner(companyAccount.userId, id))) 
+        if(!(await WorkspaceService.isOwner(user.userId, id))) 
             throw new Error("Forbidden: Company Account has no permission over this workspace");
 
         const workspace = await WorkspaceService.delete(id);

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   app:
-    image: 'laguzs/iecomm-backend:1.2.1'
+    image: 'laguzs/iecomm-backend:1.3.0'
     build: .
     env_file:
       - .env
