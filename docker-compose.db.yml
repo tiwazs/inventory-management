@@ -14,7 +14,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image: 'laguzs/iecomm-backend:1.2'
+    image: 'laguzs/iecomm-backend:1.2.1'
     build: .
     env_file:
       - .env

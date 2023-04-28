@@ -26,7 +26,7 @@ model CompanyAccount {
   firstName     String?
   lastName      String?
   image         String?
-  emailVerified DateTime?   @map("email_verified")
+  emailVerified DateTime?
   apiKey        String?     @unique
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
