@@ -15,7 +15,7 @@ export class AuthenticationService {
         if (!user) { throw new Error("User not found");}
         
         // Matching password
-        if( !(await Encryptor.matchPassword(password, user.password)) ){ throw new Error("Invalid Credentials"); }
+        if( !(await Encryptor.matchPassword(password, user.password!)) ){ throw new Error("Invalid Credentials"); }
         
         logger.debug( `Password matched` );
         // Creating an access token for the user

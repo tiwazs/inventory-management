@@ -16,7 +16,7 @@ const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'Inventory Management System API',
-      version: '1.3.1',
+      version: '1.3.2',
       description: 'A simple Inventory Management System API'
     },
     servers: [
