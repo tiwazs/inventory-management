@@ -1,5 +1,5 @@
 # Builder Step
-FROM node as builder
+FROM node AS builder
 
 WORKDIR /app
 
